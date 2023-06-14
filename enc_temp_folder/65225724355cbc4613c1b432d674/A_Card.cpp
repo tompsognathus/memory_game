@@ -67,8 +67,3 @@ void AA_Card::Rotate(float DeltaTime)
 	// Rotate
 	SetActorRotation(m_NewRotation);
 }
-
-void AA_Card::SetCardId(int CardId)
-{
-	m_CardId = CardId;
-}

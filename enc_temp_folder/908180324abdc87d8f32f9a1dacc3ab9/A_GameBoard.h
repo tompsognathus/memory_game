@@ -36,7 +36,6 @@ private:
 	void SpawnCard(int idx);
 	void PositionCards();
 	void ShuffleCards();
-	void AssignCardIds();
 	FVector CalculateCardPosition(int CardIdx);
 
 

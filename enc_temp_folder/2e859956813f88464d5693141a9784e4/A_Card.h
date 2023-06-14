@@ -25,13 +25,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Card")
 	void InitiateCardFlip();
 
-	void SetCardId(int CardId);
-
-	UPROPERTY(BlueprintReadOnly, Category = "Card")
-	int m_CardId;
-
 private:
-
 	bool m_IsRotating = false;
 	bool m_CardIsFaceUp;
 

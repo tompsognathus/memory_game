@@ -18,7 +18,6 @@ void AA_GameBoard::BeginPlay()
 	SpawnCards();
 	PositionCards();
 	ShuffleCards();
-	AssignCardIds();
 }
 
 // Called every frame
@@ -84,22 +83,6 @@ void AA_GameBoard::ShuffleCards()
 	});
 
 	PositionCards();
-}
-
-void AA_GameBoard::AssignCardIds()
-{
-	for (int idx = 0; idx < m_CardsOnBoard.Num(); idx++)
-	{
-		AA_Card* Card = Cast<AA_Card>(m_CardsOnBoard[idx]);
-		if (Card)
-		{
-				Card->SetCardId(idx);
-			}
-		else
-		{
-				UE_LOG(LogTemp, Error, TEXT("Failed to cast card %s to AA_Card"), *m_CardsOnBoard[idx]->GetName());
-			}
-	}
 }
 
 FVector AA_GameBoard::CalculateCardPosition(int CardIdx)
