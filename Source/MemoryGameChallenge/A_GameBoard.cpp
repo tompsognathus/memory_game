@@ -17,16 +17,13 @@ void AA_GameBoard::BeginPlay()
 	Super::BeginPlay();
 	SpawnCards();
 	PositionCards();
+	ShuffleCards();
 }
 
 // Called every frame
 void AA_GameBoard::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-
-
-
 
 }
 
@@ -77,6 +74,15 @@ void AA_GameBoard::PositionCards()
 		FVector NewPosition = CalculateCardPosition(idx);
 		m_CardsOnBoard[idx]->SetActorLocation(NewPosition);
 	}
+}
+
+void AA_GameBoard::ShuffleCards()
+{
+	m_CardsOnBoard.Sort([](const AActor& A, const AActor& B) {
+		return FMath::FRand() < 0.5f;
+	});
+
+	PositionCards();
 }
 
 FVector AA_GameBoard::CalculateCardPosition(int CardIdx)
