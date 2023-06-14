@@ -31,8 +31,10 @@ public:
 	void SetCardIdx(int CardId);
 	int GetCardIdx();
 
+	void ResetCard();
+
 	UPROPERTY(BlueprintReadOnly, Category = "Card")
-	int m_CardId;
+	int m_CardId = -1;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Card")
 	bool m_CardWasMatched = false;

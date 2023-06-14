@@ -112,6 +112,7 @@ FVector AA_GameBoard::CalculateCardPosition(int CardIdx)
 
 void AA_GameBoard::OnCardClicked(int CardId)
 {
+	UE_LOG(LogTemp, Display, TEXT("Updating num guesses UI"));
 	m_SelectedCardIdxs.Add(FindIdxOfCardWithCardId(CardId));
 
 	// If 2 cards are selected, check if they match and react accordingly
@@ -171,6 +172,7 @@ void AA_GameBoard::OnCardClicked(int CardId)
 
 void AA_GameBoard::ResetGame()
 {
+	UE_LOG(LogTemp, Display, TEXT("Resetting game"));
 	// Reset each card
 	for (AActor* CardActor : m_CardsOnBoard)
 	{
@@ -181,8 +183,7 @@ void AA_GameBoard::ResetGame()
 	m_SelectedCardIdxs.Empty();
 	ShuffleCards();
 	SetCardIds();
-	m_NumGuesses = 0;
-	UpdateNumGuessesUI(m_NumGuesses);
+
 }
 
 

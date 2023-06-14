@@ -108,4 +108,12 @@ int AA_Card::GetCardIdx()
 	return m_CardId;
 }
 
+void AA_Card::ResetCard()
+{
+	SetActorRotation(FRotator(0.f, 0.f, 180.f));
+	m_CardIsFaceUp = false;
+	m_CardWasMatched = false;
+
+}
+
 

@@ -26,11 +26,23 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
+	UFUNCTION(BlueprintImplementableEvent, Category="GameBoard")
+	void UpdateNumGuessesUI(int NumGuesses);
+
 	UFUNCTION(BlueprintCallable)
 	void OnCardClicked(int CardId);
 
+	UFUNCTION(BlueprintCallable)
+	void ResetGame();
+
 	UPROPERTY(EditAnywhere, Category="GameBoard")
 	TArray<UBlueprint*> m_CardBlueprints;
+
+	UPROPERTY(EditAnywhere, Category="GameBoard")
+	USoundBase* m_CardMatchedSFX;
+
+	UPROPERTY(EditAnywhere, Category = "GameBoard")
+	USoundBase* m_VictorySFX;
 
 	TArray<AActor*> m_CardsOnBoard;
 	int m_BoardSize = 4;
@@ -46,4 +58,6 @@ private:
 	int FindIdxOfCardWithCardId(int CardId);
 
 	TArray<int> m_SelectedCardIdxs;
+	int m_NumCardsMatched = 0;
+	int m_NumGuesses = 0;
 };
