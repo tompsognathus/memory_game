@@ -18,7 +18,7 @@ void AA_GameBoard::BeginPlay()
 	SpawnCards();
 	PositionCards();
 	ShuffleCards();
-	AssignCardIds();
+	SetCardIds();
 }
 
 // Called every frame
@@ -86,21 +86,15 @@ void AA_GameBoard::ShuffleCards()
 	PositionCards();
 }
 
-void AA_GameBoard::AssignCardIds()
+void AA_GameBoard::SetCardIds()
 {
+// Set card ids
 	for (int idx = 0; idx < m_CardsOnBoard.Num(); idx++)
 	{
-		AA_Card* Card = Cast<AA_Card>(m_CardsOnBoard[idx]);
-		if (Card)
-		{
-				Card->SetCardId(idx);
-			}
-		else
-		{
-				UE_LOG(LogTemp, Error, TEXT("Failed to cast card %s to AA_Card"), *m_CardsOnBoard[idx]->GetName());
-			}
+		Cast<AA_Card>(m_CardsOnBoard[idx])->SetCardIdx(idx);
 	}
 }
+
 
 FVector AA_GameBoard::CalculateCardPosition(int CardIdx)
 {
@@ -112,3 +106,79 @@ FVector AA_GameBoard::CalculateCardPosition(int CardIdx)
 
 	return FVector(XPosition, YPosition, 100.0f);
 }
+
+
+
+void AA_GameBoard::OnCardClicked(int CardId)
+{
+	m_SelectedCardIdxs.Add(FindIdxOfCardWithCardId(CardId));
+
+	// If 2 cards are selected, check if they match and react accordingly
+	if (m_SelectedCardIdxs.Num() == 2)
+	{
+		bool bCardsMatch = CheckIfCardsMatch();
+
+		if (bCardsMatch)
+		{
+			for (int idx : m_SelectedCardIdxs)
+			{
+				Cast<AA_Card>(m_CardsOnBoard[idx])->SetWasMatched(true);
+			}
+		}
+		else
+		{
+			// flip cards back over
+			for (int idx : m_SelectedCardIdxs)
+			{
+
+				Cast<AA_Card>(m_CardsOnBoard[idx])->InitiateDelayedCardFlip();
+			}
+			
+		}
+		
+		// Clear selected cards array
+		m_SelectedCardIdxs.Empty();
+	}
+}
+
+
+bool AA_GameBoard::CheckIfCardsMatch()
+{
+	if (m_SelectedCardIdxs.Num() != 2)
+	{
+		return false;
+	}
+	else
+	{
+		int idx1 = m_SelectedCardIdxs[0];
+		int idx2 = m_SelectedCardIdxs[1];
+
+		AActor* Card1 = m_CardsOnBoard[idx1];
+		AActor* Card2 = m_CardsOnBoard[idx2];
+
+		// Compare card tags to see if there's a match
+		if (Card1->Tags[0] == Card2->Tags[0])
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
+int AA_GameBoard::FindIdxOfCardWithCardId(int CardId)
+{
+	int Idx = -1;
+	for (AActor* CardActor : m_CardsOnBoard)
+	{
+		if (Cast<AA_Card>(CardActor)->GetCardIdx() == CardId)
+		{
+			Idx = m_CardsOnBoard.Find(CardActor);
+		}
+	}
+	return Idx;
+}
+
+

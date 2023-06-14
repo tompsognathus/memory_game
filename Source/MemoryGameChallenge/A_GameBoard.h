@@ -26,8 +26,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
+	UFUNCTION(BlueprintCallable)
+	void OnCardClicked(int CardId);
+
 	UPROPERTY(EditAnywhere, Category="GameBoard")
 	TArray<UBlueprint*> m_CardBlueprints;
+
 	TArray<AActor*> m_CardsOnBoard;
 	int m_BoardSize = 4;
 
@@ -36,8 +40,10 @@ private:
 	void SpawnCard(int idx);
 	void PositionCards();
 	void ShuffleCards();
-	void AssignCardIds();
+	void SetCardIds();
 	FVector CalculateCardPosition(int CardIdx);
+	bool CheckIfCardsMatch();
+	int FindIdxOfCardWithCardId(int CardId);
 
-
+	TArray<int> m_SelectedCardIdxs;
 };

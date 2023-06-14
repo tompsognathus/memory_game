@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "A_Card.generated.h"
 
+
 UCLASS()
 class MEMORYGAMECHALLENGE_API AA_Card : public AActor
 {
@@ -24,16 +25,28 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION(BlueprintCallable, Category = "Card")
 	void InitiateCardFlip();
+	void InitiateDelayedCardFlip();
+	void SetWasMatched(bool WasMatched);
 
-	void SetCardId(int CardId);
+	void SetCardIdx(int CardId);
+	int GetCardIdx();
 
 	UPROPERTY(BlueprintReadOnly, Category = "Card")
 	int m_CardId;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Card")
+	bool m_CardWasMatched = false;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Card")
+	bool m_CardIsFaceUp;
+
 private:
+	float m_DelayedFlipTimer = 0.f;
+	bool m_PerformingDelayedFlip = false;
+	void PerformDelayedFlip(float DeltaTime);
+
 
 	bool m_IsRotating = false;
-	bool m_CardIsFaceUp;
 
 	void Rotate(float DeltaTime);
 
@@ -42,9 +55,8 @@ private:
 	float m_RotationSpeed = 100.f;
 
 	float m_AngleRotated = 0.f;
-
+	
 	FRotator m_InitialRotation;
 	FRotator m_TargetRotation;
 	FRotator m_NewRotation;
-
 };

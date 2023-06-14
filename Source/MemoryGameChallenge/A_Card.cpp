@@ -30,6 +30,10 @@ void AA_Card::Tick(float DeltaTime)
 	{
 		Rotate(DeltaTime);
 	}
+	if (m_PerformingDelayedFlip)
+	{
+		PerformDelayedFlip(DeltaTime);
+	}
 }
 
 void AA_Card::InitiateCardFlip()
@@ -48,6 +52,32 @@ void AA_Card::InitiateCardFlip()
 	m_CardIsFaceUp = !m_CardIsFaceUp;
 }
 
+void AA_Card::InitiateDelayedCardFlip()
+{
+	m_DelayedFlipTimer = 1.f;
+	m_PerformingDelayedFlip = true;
+}
+
+
+
+void AA_Card::SetWasMatched(bool WasMatched)
+{
+	m_CardWasMatched = WasMatched;
+}
+
+
+void AA_Card::PerformDelayedFlip(float DeltaTime)
+{
+	if (m_DelayedFlipTimer > 0.f)
+	{
+		m_DelayedFlipTimer -= DeltaTime;
+	}
+	else
+	{
+		InitiateCardFlip();
+		m_PerformingDelayedFlip = false;
+	}
+}
 
 void AA_Card::Rotate(float DeltaTime)
 {
@@ -68,7 +98,14 @@ void AA_Card::Rotate(float DeltaTime)
 	SetActorRotation(m_NewRotation);
 }
 
-void AA_Card::SetCardId(int CardId)
+void AA_Card::SetCardIdx(int CardId)
 {
 	m_CardId = CardId;
 }
+
+int AA_Card::GetCardIdx()
+{
+	return m_CardId;
+}
+
+
