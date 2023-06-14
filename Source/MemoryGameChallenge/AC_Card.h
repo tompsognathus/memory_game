@@ -24,22 +24,39 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable, Category = "Card")
-	void InitiateCardFlip();
-		
+	//UFUNCTION(BlueprintCallable, Category = "Card")
+	//	void InitiateCardFlip();
+
 private:
-	bool m_IsRotating = false;
-	bool m_CardIsFaceUp;
+	//bool m_IsRotating = false;
+	//bool m_CardIsFaceUp;
 
-	void Rotate(float DeltaTime);
+	//void Rotate(float DeltaTime);
 
-	// Rotation variables
-	UPROPERTY(EditAnywhere, Category = "Card")
-	float m_RotationSpeed = 100.f;
+	//// Rotation variables
+	//UPROPERTY(EditAnywhere, Category = "Card")
+	//	float m_RotationSpeed = 100.f;
 
-	float m_AngleRotated = 0.f;
+	//float m_AngleRotated = 0.f;
 
-	FRotator m_InitialRotation;
-	FRotator m_TargetRotation;
-	FRotator m_NewRotation;
+	//FRotator m_InitialRotation;
+	//FRotator m_TargetRotation;
+	//FRotator m_NewRotation;
+	//UFUNCTION(BlueprintCallable, Category = "Card")
+	//void InitiateCardFlip();
+	//	
+	//bool m_IsRotating = false;
+	//bool m_CardIsFaceUp;
+
+	//void Rotate(float DeltaTime);
+
+	//// Rotation variables
+	//UPROPERTY(EditAnywhere, Category = "Card")
+	//float m_RotationSpeed = 100.f;
+
+	//float m_AngleRotated = 0.f;
+
+	//FRotator m_InitialRotation;
+	//FRotator m_TargetRotation;
+	//FRotator m_NewRotation;
 };

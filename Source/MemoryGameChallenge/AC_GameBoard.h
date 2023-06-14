@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "AC_Card.h"
 #include "AC_GameBoard.generated.h"
 
 
@@ -23,6 +24,16 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UPROPERTY(EditAnywhere)
+	int m_Tile_Spacing = 300;
+
+	UPROPERTY(EditAnywhere)
+	TArray<UAC_Card*> m_Cards;
+
+private:
+
+	int m_BoardSize = 4;
 
 		
 };
